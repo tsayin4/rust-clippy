@@ -54,3 +54,13 @@ fn test_unit_ref_2(v: &[(usize, ())]) {
         let _ = x;
     }
 }
+
+// Probe: rust-lang/rust-clippy#11754 -- `_` on the left of a destructuring assignment.
+// No annotation on purpose: if the lint fires here, the suggestion `() = &mut *x` does
+// not compile, so any diagnostic reported below is a false positive.
+fn probe_11754() {
+    let mut u = ();
+    let x = &mut u;
+    _ = &mut *x;
+    _ = ();
+}
